@@ -1,3 +1,4 @@
+{% load static %}
 
 <!DOCTYPE html>
 
@@ -60,6 +61,12 @@
                 color: #fff;
             }
 
+            #current-date {
+                padding-top: 5px;
+                font-size: 18px;
+                padding-bottom: 10px;
+            }
+
             .task-wrapper {
                 display: flex;
                 align-items: centre;
@@ -71,6 +78,11 @@
                 border-top: 1px solid rgb(60,60,60); 
             }
 
+            .task-content { /* New class group */
+                display: flex;
+                flex-direction: column;
+            }
+
             .task-title {
                 display: flex;
                 align-items: center;
@@ -78,23 +90,32 @@
 
             .task-title a{
                 text-decoration: none;
-                color: #4b5156;
+                color: #000;
                 margin-left: 10px;
+                transition: transform 0.2s ease-in-out;
+            }
+
+            .task-title a:hover {
+                transform: scale(1.1);
             }
 
             .task-complete-icon {
                 font-size: 27px;
-                color: rgb(105 , 192 , 105); 
+                color: rgb(105 , 192 , 105);
+                margin-left: -15px;
             }
 
             .task-incomplete-icon {
                font-size: 27px;
                color:  rgb(169, 169, 169); 
+               margin-left: -15px;
             }
 
             .task-description {
                 font-size: 10px; 
-                color: #888;   
+                color: #888;
+                margin-left: 30px; /* Adding space so Descrition can be inline with title */
+                margin-top: -10px; /* Making Descrition closer to Task Title */
                 
             }
 
@@ -104,6 +125,12 @@
                 color: #cf4949;
                 font-size: 22px;
                 line-height: 0;
+                transition: transform 0.2s ease-in-out;
+
+            }
+
+            .delete-link:hover {
+                transform: scale(1.1);
             }
 
             #search-add-wrapper {
@@ -141,15 +168,93 @@
                 color: #000000;
                 padding: 10px;
                 font-size: 14px;
-                border-radius: 5px;
+                border-radius: 10px;
                 cursor: pointer;
                 text-decoration: none;
                 margin-left: 10px;
+                margin-top: 10px;
+                transition: transform 0.2s ease-in-out;
+            }
+
+            button:hover {
+                background-color: #403f3f;
+                color: #FFFFFF;
+                transform: scale(1.1);
+            }
+
+            #logout-button {
+                background-color: #fff;
+                color: black;
+                border-radius: 20px;
+                font-size: 15px; 
+                padding: 10px 10px;
             }
 
             .card-body {
                 padding: 20px;
             }
+
+            #add-link {
+                display: flex;
+                justify-content: center;  /* Center horizontally */
+                align-items: center;      /* Center vertically */
+                font-size: 35px;
+                background-color: #3d3d3d;
+                color: #fff;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                transition: background-color 0.3s, color 0.3s;
+                text-decoration: none; /* Remove underline */
+                transition: transform 0.2s ease-in-out;
+            }
+
+            #add-link:hover {
+                background-color: #1e1c1c;
+                color: #ffffff;
+                transform: scale(1.1);
+            }
+
+            #back-button {
+                transition: transform 0.2s ease-in-out;
+            }
+
+            #back-button:hover {
+                transform: scale(1.1); 
+            }
+
+            #submit-button {
+                background-color: rgb(65, 65, 65);
+                color: whitesmoke;
+                font-size: 16px;
+                transition: transform 0.2s ease-in-out;
+                margin-bottom: 10px;
+            }
+
+            #submit-button:hover {
+                transform: scale(1.1);
+            }
+
+            #link-style {
+                color: black;
+                transition: transform 0.2s ease-in-out;
+                display: inline-block;
+            }
+
+            #link-style:hover {
+                transform: scale(1.1);
+            }
+
+            #search-bar {
+                background-color: #888;
+                border: 2px solid #000;
+            }
+
+            #search-bar::placeholder {
+                color: white;  /* White text color */
+                font-style: italic;  /* Italicize the placeholder text */
+            }
+
             
 /* Animated Background */
             * {
@@ -263,7 +368,10 @@
             {% endblock content %}
         </div>
 
+        <script src="/static/js/app.js"></script>
+
     </body>
+    
 </html>
 
 

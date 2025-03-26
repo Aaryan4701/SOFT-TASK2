@@ -1,3 +1,4 @@
+
 {% extends 'base/main.html' %}
 {% block content %}
 
@@ -10,11 +11,11 @@
     <form method="POST"> 
     {% csrf_token %}
     {{form.as_p}}
-    <input class="button" type="submit" value= "login">
+    <input class="button" type="submit" value= "login" id="submit-button">
 </form>
-<p>Dont have an account? <a href="{% url 'register' %}">Register</a></p>
+<p>Dont have an account? <a href="{% url 'register' %}" id="link-style">Register</a></p>
 </div>
-
+<script src="/static/js/app.js"></script>
 
 {% endblock content %}
 

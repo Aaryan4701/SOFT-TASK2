@@ -1,16 +1,19 @@
 {% extends 'base/main.html' %}
 {% block content %}
+{% load static %}  
+{% load tz %}
 
 <div class="header-bar">
     <div>
         <h1>Hello {{request.user|title}}</h1>
+        <h3 id="current-date" style="margin:0">Date: <i>{% now "l, F j, Y" %}</i></h3>
         <h3 style="margin:0">You have <i>{{count}}</i> incomplete task{{ count|pluralize:"s" }}</h3>
     </div>
 
     {% if request.user.is_authenticated %}
         <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
-            <button type="submit">Logout</button>
+            <button type="submit" id="logout-button">Logout</button>
         </form>
     {% else %}
     <a href="{% url 'login' %}">Login</a>
@@ -21,52 +24,51 @@
 
 <div id="search-add-wrapper">
     <form method="GET" style="margin-top:20px;display:flex;">
-        <input type="texts" name='search-area' value="{{search_input}}">
-        <input class="button" type ="submit" value="Search">
+        <input type="texts" name='search-area' value="{{search_input}}" id="search-bar" placeholder="Type here...">
+        <input class="button" type ="submit" value="Search" id="submit-button">
     </form> 
     <a id="add-link" href="{% url 'task-create' %}">&#x2b;</a>
 
 </div>
 
-
-
 <div class="task-items-wrapper">
     {% for task in tasks %}
         <div class="task-wrapper">
             {% if task.complete %}
-            <div class="task-title">
-                    <div class="task-complete-icon">&#9729;</div>
+
+            <div class="task-content"> <!-- ADDED A NEW WRAPPER TO GROUP TITLE AND DESCRIPTION -->
+                <div class="task-title">
+                    <div class="task-complete-icon">&#9729;</div>  
                     <i><s><a href="{% url 'task-update' task.id %}">{{task}}</a></s></i>
-                    
-                    <div class="task-description">
-                        <br>
-                        <p>{{ task.description }}</p>  
-                    </div>
+                </div>
+
+                <div class="task-description"> <!-- Adding Task descrition with the Task title -->
+                    <p><i>{{ task.description|slice:":40" }}{% if task.description|length > 40 %}...{% endif %}</i></p>  <!--Making it italic font , adding character limit of 40-->
+                </div>
 
             </div>
-            <a class="delete-link" href="{% url 'task-delete' task.id %}">&#215;</a>
+            <a class="delete-link" href="{% url 'task-delete' task.id %}">&#x2718;</a>
+
             {% else %}
-            <div class="task-title">
-                <div class="task-incomplete-icon">&#9729;</div>
-                <a href="{% url 'task-update' task.id %}">{{task}}</a>
-            </div>
+            <div class="task-content"> <!-- ADDED A NEW WRAPPER TO GROUP TITLE AND DESCRIPTION -->
+                <div class="task-title">
+                    <div class="task-incomplete-icon">&#9729;</div>
+                    <a href="{% url 'task-update' task.id %}">{{task}}</a>
+                </div>
 
-            <div class="task-description">
-                <br>
-                <p>{{ task.description }}</p>  
-            </div>
+                <div class="task-description"> <!-- Adding Task descrition with the Task title -->
+                    <p><i>{{ task.description|slice:":40" }}{% if task.description|length > 40 %}...{% endif %}</i></p>  <!--Making it italic font , adding character limit of 40-->
+                </div>
 
-            <a class="delete-link" href="{% url 'task-delete' task.id %}">&#215;</a>
+            </div>
+            <a class="delete-link" href="{% url 'task-delete' task.id %}">&#x2718;</a>
             {% endif %}
-            
         </div>
-
-    {% empty %}
-    <h3>No items in List</h3>
     {% endfor %}
 </div>
 
 
-
+<script src="/static/js/app.js"></script>
 {% endblock content %}
+
 

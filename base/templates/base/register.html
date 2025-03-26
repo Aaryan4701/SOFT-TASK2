@@ -18,10 +18,10 @@
         {{form.password2}}
 
 
-        <input style="margin-top:10px;" class="button" type="submit" value= "Register">
+        <input style="margin-top:10px;" class="button" type="submit" value= "Register"  id="submit-button">
     </form>
-    <p>Already have an Account? <a href="{% url 'login' %}">Login</a></p>
+    <p>Already have an Account? <a href="{% url 'login' %}" id="link-style">Login</a></p>
 </div>
-
+<script src="/static/js/app.js"></script>
 {% endblock content %}
 
