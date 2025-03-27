@@ -1,8 +1,9 @@
+
 {% extends 'base/main.html' %}
 {% block content %}
 
 <div class="header-bar">
-    <a id="back-button" href="{% url 'tasks' %}">&#8592; Back</a>
+    <a id="back-button" href="{% url 'tasks' %}">&#8592; Back</a> <!--Setting the backbutton on the headerbar-->
 
 </div>
 
@@ -11,11 +12,11 @@
     <form method="POST" action=""> 
         {% csrf_token %}
         {{form.as_p}}
-        <input class="button" type="submit" value="Submit" id="submit-button">
+        <input class="button" type="submit" value="Submit" id="submit-button"> <!--Setting the submit button for the form-->
     </form>
 </div>
 
-<script src="/static/js/app.js"></script>
+<script src="/static/js/app.js"></script> <!--Linking to the javascript file -->
 
 {% endblock content %}
 

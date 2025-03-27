@@ -1,63 +1,120 @@
+
 {% extends 'base/main.html' %}
 {% block content %}
 {% load static %}  
 {% load tz %}
-
+<!--formatting the header bar for the todo list -->
 <div class="header-bar">
     <div>
-        <h1>Hello {{request.user|title}}</h1>
-        <h3 id="current-date" style="margin:0">Date: <i>{% now "l, F j, Y" %}</i></h3>
-        <h3 style="margin:0">You have <i>{{count}}</i> incomplete task{{ count|pluralize:"s" }}</h3>
+        <h1>Hello {{request.user|title}}</h1> <!--Greets the user with their username -->
+        <h3 id="current-date" style="margin:0">Date: <i>{% now "l, F j, Y" %}</i></h3> <!--Displays the current date -->
+        <h3 style="margin:0">You have <i>{{count}}</i> incomplete task{{ count|pluralize:"s" }}</h3> <!--Displays the amount of remaining tasks -->
     </div>
-
+<!--Checks if user is logged in / authenticated-->
     {% if request.user.is_authenticated %}
-        <form method="post" action="{% url 'logout' %}">
+        <form method="post" action="{% url 'logout' %}"> <!--If logged in , The button will show logout -->
             {% csrf_token %}
             <button type="submit" id="logout-button">Logout</button>
         </form>
     {% else %}
-    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'login' %}">Login</a> <!--If logged out , The button will show login -->
     {% endif %}
 
 </div>
 
-
+<!-- Search bar and add task section-->
 <div id="search-add-wrapper">
     <form method="GET" style="margin-top:20px;display:flex;">
-        <input type="texts" name='search-area' value="{{search_input}}" id="search-bar" placeholder="Type here...">
+        <input type="texts" name='search-area' value="{{search_input}}" id="search-bar" placeholder="Type here..."> <!--Adding a placehodler for the textbar -->
         <input class="button" type ="submit" value="Search" id="submit-button">
     </form> 
-    <a id="add-link" href="{% url 'task-create' %}">&#x2b;</a>
+    <a id="add-link" href="{% url 'task-create' %}">&#x2b;</a> <!--Forming a add task link with a plus symbol -->
 
 </div>
 
+<!-- Task content section-->
+
+<div class="task-items-wrapper">
+    {% for task in tasks %}
+        <div class="task-wrapper">
+            <div class="task-content"> <!-- Made a new wrapper to group the task title and description -->
+                <div class="task-title">
+                    <!--Checks if task is completed / incomplete and changes its icon accordingly -->
+                    {% if task.complete %}
+                        <div class="task-complete-icon">&#9729;</div>  
+                        <i><s><a href="{% url 'task-update' task.id %}">{{ task }}</a></s></i> <!-- Strikes the task when it's completed -->
+                    {% else %}
+                        <div class="task-incomplete-icon">&#9729;</div>
+                        <a href="{% url 'task-update' task.id %}">{{ task }}</a>
+                    {% endif %}
+                </div>
+                <!-- Added Task descrition with a character limit of 40 -->
+                <div class="task-description">
+                    <p><i>{{ task.description|slice:":40" }}{% if task.description|length > 40 %}...{% endif %}</i></p> 
+                    
+                </div>
+            </div>
+
+           <!-- New wrapper to seperate the task actions from the task content -->
+           <div class="task-actions">
+                <form method="POST" action="{% url 'task-complete' task.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="tick-button {% if task.complete %}completed{% endif %}" > <!-- Made the class alter so I can edit the back symbol invididually -->
+                        {% if task.complete %}
+                            &#8634; <!-- Back symbol -->
+                        {% else %}
+                            &#10004; <!-- Tick symbol -->
+                        {% endif %}
+                    </button>
+                </form>
+
+                <a class="delete-link" href="{% url 'task-delete' task.id %}">&#x2718;</a> <!-- Adding the Delete link , making it common with all tasks  -->
+            </div>
+
+            <script src="/static/js/app.js"></script> <!-- Linking the javascript file -->
+
+        </div>
+    {% endfor %}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- Backup
 <div class="task-items-wrapper">
     {% for task in tasks %}
         <div class="task-wrapper">
             {% if task.complete %}
 
-            <div class="task-content"> <!-- ADDED A NEW WRAPPER TO GROUP TITLE AND DESCRIPTION -->
+            <div class="task-content"> 
                 <div class="task-title">
                     <div class="task-complete-icon">&#9729;</div>  
                     <i><s><a href="{% url 'task-update' task.id %}">{{task}}</a></s></i>
                 </div>
 
-                <div class="task-description"> <!-- Adding Task descrition with the Task title -->
-                    <p><i>{{ task.description|slice:":40" }}{% if task.description|length > 40 %}...{% endif %}</i></p>  <!--Making it italic font , adding character limit of 40-->
+                <div class="task-description"> 
+                    <p><i>{{ task.description|slice:":40" }}{% if task.description|length > 40 %}...{% endif %}</i></p>  
                 </div>
 
             </div>
             <a class="delete-link" href="{% url 'task-delete' task.id %}">&#x2718;</a>
 
             {% else %}
-            <div class="task-content"> <!-- ADDED A NEW WRAPPER TO GROUP TITLE AND DESCRIPTION -->
+            <div class="task-content"> 
                 <div class="task-title">
                     <div class="task-incomplete-icon">&#9729;</div>
                     <a href="{% url 'task-update' task.id %}">{{task}}</a>
                 </div>
 
-                <div class="task-description"> <!-- Adding Task descrition with the Task title -->
-                    <p><i>{{ task.description|slice:":40" }}{% if task.description|length > 40 %}...{% endif %}</i></p>  <!--Making it italic font , adding character limit of 40-->
+                <div class="task-description"> 
+                    <p><i>{{ task.description|slice:":40" }}{% if task.description|length > 40 %}...{% endif %}</i></p>  
                 </div>
 
             </div>
@@ -67,8 +124,7 @@
     {% endfor %}
 </div>
 
-
 <script src="/static/js/app.js"></script>
 {% endblock content %}
 
-
+-->

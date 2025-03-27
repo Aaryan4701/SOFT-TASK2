@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="header-bar">
-    <h1>Login</h1>
+    <h1>Login</h1> <!--Setting heading for login page-->
 </div>
 
 
@@ -11,11 +11,11 @@
     <form method="POST"> 
     {% csrf_token %}
     {{form.as_p}}
-    <input class="button" type="submit" value= "login" id="submit-button">
+    <input class="button" type="submit" value= "login" id="submit-button"> <!--Setting the submit button for the form-->
 </form>
-<p>Dont have an account? <a href="{% url 'register' %}" id="link-style">Register</a></p>
+<p>Dont have an account? <a href="{% url 'register' %}" id="link-style">Register</a></p> <!--Setting the link to register page-->
 </div>
-<script src="/static/js/app.js"></script>
+<script src="/static/js/app.js"></script> <!--Linking to js file-->
 
 {% endblock content %}
 

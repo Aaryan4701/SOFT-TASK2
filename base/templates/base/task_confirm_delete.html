@@ -1,8 +1,9 @@
+
 {% extends 'base/main.html' %}
 {% block content %}
 
 <div class="header-bar">
-    <a  id="back-button" href="{% url 'tasks' %}">&#8592; Go Back</a>
+    <a  id="back-button" href="{% url 'tasks' %}">&#8592; Go Back</a> <!--Setting the back link on the headerbar-->
 
 
 </div>
@@ -10,12 +11,12 @@
 <div class="card-body">
     <form method="POST">
         {% csrf_token %}
-        <p>Are you sure you want eject "{{task}}" into space?</p>
-        <input class="button" type="submit" value="Delete" id="submit-button"/> 
+        <p>Are you sure you want eject "{{task}}" into space?</p> <!--giving users a warning-->
+        <input class="button" type="submit" value="Delete" id="submit-button"/> <!--Setting the delete button for deletion-->
     </form>
 </div>
 
-<script src="/static/js/app.js"></script>
+<script src="/static/js/app.js"></script> <!--Linking to the js files-->
 
 {% endblock content %}
 

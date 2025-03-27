@@ -1,27 +1,32 @@
+
 {% extends 'base/main.html' %}
 {% block content %}
 
 <div class="header-bar">
-    <h1>Register</h1>
+    <h1>Register</h1> <!--Setting the heading-->
 </div>
-    
-<div class="card-body">
+ <!--Setting the format of the input boxes-->   
+<div class="card-body"> 
     <form method="POST"> 
         {% csrf_token %}
-        <form>{{form.username.label}}</form>
-        {{form.username}}
+        
+        <label>{{ form.username.label }}</label>
+        {{ form.username }}
 
-        <form>{{form.password1.label}}</form>
-        {{form.password1}}
+        <label>{{ form.password1.label }}</label>
+        {{ form.password1 }}
 
-        <form>{{form.password2.label}}</form>
-        {{form.password2}}
+        <label>{{ form.password2.label }}</label>
+        {{ form.password2 }}
 
-
-        <input style="margin-top:10px;" class="button" type="submit" value= "Register"  id="submit-button">
+        <input style="margin-top:10px;" class="button" type="submit" value="Register" id="submit-button"> <!--Setting the submit button-->
     </form>
-    <p>Already have an Account? <a href="{% url 'login' %}" id="link-style">Login</a></p>
+
+    <p>Already have an Account? <a href="{% url 'login' %}" id="link-style">Login</a></p> <!--Setting a link to the login page-->
 </div>
-<script src="/static/js/app.js"></script>
+
+<script src="/static/js/app.js"></script> <!--Linking the js file-->
+
 {% endblock content %}
+
 
